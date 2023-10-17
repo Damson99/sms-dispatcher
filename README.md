@@ -1,1 +1,1 @@
-# sms-dispatcher
+if urls > 4 then throw exception
