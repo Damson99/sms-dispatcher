@@ -13,13 +13,14 @@ public class ApplicationEvaluatorService {
     private final NetworkSubscriberRepository networkSubscriberRepository;
 
     public EvaluatedContent handle(EvaluateSMSContentCommand command) {
-        final PhoneNumberValue phoneNumberValue = new PhoneNumberValue(command.recipient());
-        log.info("looking for subscriber with phone number {}, recipient {}", command.recipient(), command.recipient());
+        final String recipient = command.recipient();
+        final PhoneNumberValue phoneNumberValue = new PhoneNumberValue(recipient);
+        log.info("looking for subscriber with phone number {}, recipient {}", recipient, recipient);
         final Optional<NetworkSubscriber> optionalNetworkSubscriber = networkSubscriberRepository.findByPhoneNumber(phoneNumberValue);
-        final NetworkSubscriber networkSubscriber = optionalNetworkSubscriber.orElseThrow(() -> NetworkSubscriberNotFound.NOT_FOUND);
-        if (networkSubscriber.isNotMember()) {
-            return EvaluatedContent.NOT_MEMBER;
-        }
+        final NetworkSubscriber networkSubscriber = optionalNetworkSubscriber.orElseThrow(() -> {
+            log.warn("subscriber not found {}", recipient);
+            throw NetworkSubscriberNotFound.NOT_FOUND;
+        });
         return domainService.evaluateContentFor(command.message(), networkSubscriber);
     }
 }
