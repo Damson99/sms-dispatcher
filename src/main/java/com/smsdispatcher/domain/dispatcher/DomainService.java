@@ -1,5 +1,6 @@
 package com.smsdispatcher.domain.dispatcher;
 
+import com.smsdispatcher.domain.subscriber.NetworkSubscriber;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

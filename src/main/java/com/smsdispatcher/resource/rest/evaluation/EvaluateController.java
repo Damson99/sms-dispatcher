@@ -1,12 +1,14 @@
-package com.smsdispatcher.resource.rest;
+package com.smsdispatcher.resource.rest.evaluation;
 
 import com.smsdispatcher.application.ApplicationEvaluatorService;
 import com.smsdispatcher.application.EvaluateSMSContentCommand;
 import com.smsdispatcher.domain.dispatcher.EvaluatedContent;
+import com.smsdispatcher.resource.rest.ApiVersion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +19,7 @@ class EvaluateController {
     private final ApplicationEvaluatorService applicationEvaluatorService;
 
     @PostMapping
-    public ResponseEntity<EvaluatedContent> evaluate(EvaluateSMSContentCommand command) {
+    public ResponseEntity<EvaluatedContent> evaluate(@RequestBody EvaluateSMSContentCommand command) {
         return ResponseEntity.ok(applicationEvaluatorService.handle(command));
     }
 }

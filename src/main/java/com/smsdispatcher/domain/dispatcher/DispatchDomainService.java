@@ -1,5 +1,6 @@
 package com.smsdispatcher.domain.dispatcher;
 
+import com.smsdispatcher.domain.subscriber.NetworkSubscriber;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -16,7 +17,7 @@ class DispatchDomainService extends DomainService {
     @Override
     public EvaluatedContent evaluateContentFor(String message, NetworkSubscriber networkSubscriber) {
         if (networkSubscriber.isNotMember()) {
-            return EvaluatedContent.NOT_MEMBER;
+            return EvaluatedContent.NONE;
         }
 
         final List<String> urlsToEvaluate = getUrlsFromMessage(message);

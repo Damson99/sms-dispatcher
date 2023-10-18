@@ -5,7 +5,6 @@ A component that verifies whether a text message is a phishing attack
 
 ## Additional requirements
 1. If detected ```urls is sms > 4``` then treat sms as threat.
-2. If network subscriber does not exist in sms dispatcher's database then ```404 response code``` should be returned.
 
 # ADR
 Due to the requirement for rapid deployment of the service, a ```hexagonal architecture``` has been used, which will allow a simple change in the implementation of interfaces relating to:

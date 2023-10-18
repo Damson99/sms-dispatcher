@@ -1,5 +1,7 @@
 package com.smsdispatcher.domain.dispatcher
 
+import com.smsdispatcher.domain.subscriber.NetworkMembershipEnum
+import com.smsdispatcher.domain.subscriber.NetworkSubscriber
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -30,16 +32,16 @@ class DomainServiceSpec extends Specification {
         then:
             evaluation == expectedEvaluation
         where:
-            expectedEvaluation          | subscriber                                                    | message
-            EvaluatedContent.OK         | new NetworkSubscriber(null, NetworkMembershipEnum.MEMBER)     | "Czy słyszałeś o najnowszym modelu smartfona? Sprawdź go tutaj: https://www.latestsmartphone.com To naprawdę rewolucyjne urządzenie!"
-            EvaluatedContent.NOT_MEMBER | new NetworkSubscriber(null, NetworkMembershipEnum.NOT_MEMBER) | "Czy słyszałeś o najnowszym modelu smartfona? Sprawdź go tutaj: https://www.latestsmartphone.com To naprawdę rewolucyjne urządzenie!"
-            EvaluatedContent.THREAT     | new NetworkSubscriber(null, NetworkMembershipEnum.MEMBER)     | "https://www.example2.com https://www.latestsmartphone.com \nhttp://www.1111trasdstination.com\nhttp://www.2222trasdstination.com\nhttp://www.3333trasdstination.com"
-            EvaluatedContent.NOT_MEMBER | new NetworkSubscriber(null, NetworkMembershipEnum.NOT_MEMBER) | "https://www.example2.com https://www.latestsmartphone.com \nhttp://www.1111trasdstination.com\nhttp://www.2222trasdstination.com\nhttp://www.3333trasdstination.com"
+            expectedEvaluation          | subscriber                                                          | message
+            EvaluatedContent.OK         | new NetworkSubscriber(null, null, NetworkMembershipEnum.MEMBER)     | "Czy słyszałeś o najnowszym modelu smartfona? Sprawdź go tutaj: https://www.latestsmartphone.com To naprawdę rewolucyjne urządzenie!"
+            EvaluatedContent.NONE | new NetworkSubscriber(null, null, NetworkMembershipEnum.NOT_MEMBER) | "Czy słyszałeś o najnowszym modelu smartfona? Sprawdź go tutaj: https://www.latestsmartphone.com To naprawdę rewolucyjne urządzenie!"
+            EvaluatedContent.THREAT     | new NetworkSubscriber(null, null, NetworkMembershipEnum.MEMBER)     | "https://www.example2.com https://www.latestsmartphone.com \nhttp://www.1111trasdstination.com\nhttp://www.2222trasdstination.com\nhttp://www.3333trasdstination.com"
+            EvaluatedContent.NONE | new NetworkSubscriber(null, null, NetworkMembershipEnum.NOT_MEMBER) | "https://www.example2.com https://www.latestsmartphone.com \nhttp://www.1111trasdstination.com\nhttp://www.2222trasdstination.com\nhttp://www.3333trasdstination.com"
     }
 
     def "should return THREAT when returned from #provider"() {
         given:
-            NetworkSubscriber subscriber = new NetworkSubscriber(null, NetworkMembershipEnum.MEMBER)
+            NetworkSubscriber subscriber = NetworkSubscriber.from(null, null)
             String message = "Czy słyszałeś o najnowszym modelu smartfona? Sprawdź go tutaj: https://www.latestsmartphone.com"
             DomainService domainService = new DispatchDomainService(provider, urlDetector)
         when:
