@@ -17,7 +17,7 @@ public class ApplicationEvaluatorService {
     public EvaluatedContent handle(EvaluateSMSContentCommand command) {
         final String recipient = command.recipient();
         final PhoneNumberValue phoneNumberValue = new PhoneNumberValue(recipient);
-        log.info("looking for subscriber with phone number {}, recipient {}", recipient, recipient);
+        log.info("looking for subscriber with phone number {}, sender {}", recipient, command.sender());
         final Optional<NetworkSubscriber> optionalNetworkSubscriber = networkSubscriberRepository.findByPhoneNumber(phoneNumberValue);
         if (optionalNetworkSubscriber.isEmpty()) {
             final NetworkSubscriberId newId = networkSubscriberRepository.nextIdentity();

@@ -32,3 +32,5 @@ Under heavy load, the network through which http connections pass may not be rel
 ### Decision outcome
 Since the service will not perform many updates on the data, they will be mainly writes of entire entities and their reads, and the data will not have relationships a NoSQL database will be used, specifically MongoDB.
 
+## Deploy
+MongoDB images and api services can be found [here][https://hub.docker.com/u/damson99]. To start the images in the repository is ready docker compose. To access the springdoc api service, go to the browser and follow the [link][http://localhost:8080/]. 

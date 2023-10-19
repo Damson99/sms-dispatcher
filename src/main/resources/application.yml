@@ -8,11 +8,11 @@ web-client:
 spring:
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: dispatcher
-      username: dispatcher_user_db
-      password: dispatcher_password_db
+      host: ${DB_HOST:mongodb}
+      port: ${DB_PORT:27017}
+      database: ${DB_NAME:dispatcher}
+      username: ${DB_USERNAME:dispatcher_user_dbi}
+      password: ${DB_PASSWORD:dispatcher_password_db}
 
 springdoc:
   swagger-ui:
