@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+web-client:
+  googleapis-web-risk-base: https://webrisk.googleapis.com
+  googleapis-web-risk-endpoint: /v1eap1:evaluateUri
+
+spring:
+  data:
+    mongodb:
+      host: ${DB_HOST:mongodb}
+      port: ${DB_PORT:27017}
+      database: ${DB_NAME:dispatcher}
+      username: ${DB_USERNAME:dispatcher_user_dbi}
+      password: ${DB_PASSWORD:dispatcher_password_db}
+
+springdoc:
+  swagger-ui:
+    path: /
